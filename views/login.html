@@ -1,0 +1,78 @@
+{{extend './layout/main.html'}}
+
+{{block 'content'}}
+<!-- 注册部分 -->
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-sm-8">
+      <!-- 警告框 -->
+      <div class="alert alert-warning alert-dismissible " id='warning_wrapper' role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+        <strong>。。</strong>
+      </div>
+      <!-- 登录表单 -->
+      <form class="form-horizontal form_login" method='POST'>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Username</label>
+          <div class="col-sm-10">
+            <input class="form-control" name='username' placeholder="Username" id="username">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Password</label>
+          <div class="col-sm-10">
+            <input type="password" class="form-control" placeholder="Password" name='password' id='password'>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"> Remember me
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-success" id='btn'>Sign in</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{{/block}}
+{{block 'javascript'}}
+<script>
+  $(function () {
+    $('#btn').on('click', function (e) {
+      let username = $('#username').val()
+      let password = $('#password').val()
+      $.ajax({
+        type: 'POST',
+        url: '/do-login',
+        dataType: 'json',
+        data: {
+          username,
+          password,
+        },
+        success: function (data) {
+          $('#warning_wrapper').text(data.msg)
+          $('#warning_wrapper').css('display', 'block')
+          if (data.code == '200') {
+            console.log('111');
+            window.location.href = '/index'
+          }
+        }
+      })
+    })
+    let text = $('#username').val()
+    $('input').focus(function(){
+      $(this).val('')
+    })
+
+  })
+</script>
+{{/block}}

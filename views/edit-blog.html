@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="../public/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="../public/css/common.css">
+  <script src="../public/jquery/dist/jquery.js"></script>
+  <script src="../public/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="../public/js/wangEditor.js"></script>
+</head>
+
+<body>
+  <!-- 头部导航栏 -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+        <span class="sr-only">展开导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">极简博客</a>
+    </div>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/index">首页</a></li>
+        <li><a href="#">新随笔</a></li>
+        <li><a href="#">联系</a></li>
+        <li class="dropdown"> <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理 <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">管理</a></li>
+            <li class="divider"></li>
+            <li><a href="#">管理</a></li>
+            <li class="divider"></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 内容区域 -->
+  <div class='container'>
+    <form>
+      <div class="form-group">
+        <label>文章标题</label>
+        <input 
+        type="text" 
+        class="form-control title" 
+        placeholder="title" 
+        value={{results.title}}
+        data-id={{results.article_id}}
+        >
+      </div>
+      <div class="form-group">
+        <label>摘要</label>
+        <textarea 
+        class="form-control remark " 
+        rows="3"
+        >{{results.remark}}</textarea>
+      </div>
+      <div class="form-group">
+        <label>文章内容</label>
+        <div id="editor">
+          <p>{{results.editorValue}}</p>
+        </div>
+      </div>
+      <button type="button" id="btn" class="btn btn-primary" data-toggle="modal"
+        data-target=".bs-example-modal-sm">编辑发送</button>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+
+    $(function () {
+      let E = window.wangEditor
+      let editor = new E('#editor')
+      editor.create()
+
+      $('#btn').on('click', function () {
+        let title = $('.title').val()
+        let remark = $('.remark').val()
+        let editorValue = editor.txt.text()
+        let article_id = $('.title').data('id')
+        console.log(title,remark,editorValue,article_id)
+        $.ajax({
+          type: 'POST',
+          url: '/edit-article',
+          dataType: 'json',
+          data: {
+            title,
+            remark,
+            editorValue,
+            article_id
+          },
+          success: function(data){
+            if(data.code == '200'){
+              window.location.href = '/index'
+            }
+          }
+        })
+      })
+    })
+  </script>
+</body>
+
+</html>

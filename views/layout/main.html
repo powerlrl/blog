@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+{{include '../partials/header.html'}}
+
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu">
+        <span class="sr-only">展开导航</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">极简博客</a>
+    </div>
+    <div class="collapse navbar-collapse form_wrapper">
+      <a href="./login">
+        <button type="button" class="btn btn-success navbar-btn">Sign in</button>
+      </a>
+      <a href="./register">
+        <button type="button" class="btn btn-primary navbar-btn">Register in</button>
+      </a>
+    </div>
+  </nav>
+  {{block 'content'}}
+  默认内容
+  {{/block}}
+  {{block 'javascript'}}
+  
+  {{/block}}
+</body>
+
+</html>
