@@ -13,7 +13,7 @@
     "art-template": "^4.13.2",
     "bootstrap": "^3.3.7",
     "co-mysql": "^1.0.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "koa": "^2.7.0",
     "koa-art-template": "^1.1.1",
     "koa-better-body": "^3.0.4",
